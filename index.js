@@ -34,17 +34,19 @@ const maliciousPort = [
   "33568",
   "40421",
   "60008",
-  "65000",
-  "5353"
+  "65000"
 ];
 
-// let malicious_count = 0;
+const good = document.getElementById('good');
+const danger = document.getElementById('danger');
+
+var malicious_count = 0;
 
 const fetchData = async () => {
   const res = await fetch('dict.json');
   const data = await res.json();
   var result = {};
-  let malicious_count = 0;
+  var count = 0;
 
   for(let i=0; i<2341; i++){
 
@@ -59,9 +61,12 @@ const fetchData = async () => {
     
     if (maliciousPort.includes(data[i].dstport)) {  
       malicious_count = malicious_count + 1;
+      count = count + 1;
+      // console.log(malicious_count);
     }
   }
 
+  malicious_count = count;
   // console.log(maliciousPort.includes(data[2].dstport));
 
   var obj =[];
@@ -153,9 +158,11 @@ const fetchData = async () => {
 
   // console.log(data);
 
-  if(malicious_count) {
-    setTimeout(()=>alert("You visited a malicious port!! At some point in your browsing"), 2000);
-  }
+  // if(malicious_count) {
+  //   setTimeout(()=>alert("You visited a malicious port!! At some point in your browsing"), 2000);
+  // }
+
+  checkMalicious();
 };
 
 const printTable = (obj) => {
@@ -177,4 +184,18 @@ const printTable = (obj) => {
   });
 };
 
-fetchData();
+// fetchData();
+
+function checkMalicious() {
+  if(malicious_count) {
+    setTimeout(()=>danger.style.display = "block", 2000);
+    setTimeout(()=>danger.style.display = "none", 4000);
+  } else {
+    setTimeout(()=>good.style.display = "block", 2000);
+    setTimeout(()=>good.style.display = "none", 4000);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', fetchData);
+
+// console.log(malicious_count);
