@@ -45,10 +45,21 @@ var malicious_count = 0;
 const fetchData = async () => {
   const res = await fetch('dict.json');
   const data = await res.json();
+  // const data = fetch('https://alpes.cloud/up/124623d6f46bcaede62ea8f796d66225.json', { mode: 'no-cors'})
+  // .then(blob => blob.json())
+  // .then(data => {
+  //   console.log(data);
+  //   return data;
+  // })
+  // .catch(e => {
+  //   console.log(e);
+  //   return e;
+  // });
   var result = {};
   var count = 0;
+  const length = Object.keys(data).length;
 
-  for(let i=0; i<2341; i++){
+  for(let i=0; i<length; i++){
 
     if (!result[data[i].srcip]) {  
       result[data[i].srcip] = 1;  
