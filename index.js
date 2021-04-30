@@ -45,18 +45,7 @@ var malicious_count = 0;
 const fetchData = async () => {
   const res = await fetch('dict.json');
   const data = await res.json();
-  // const data = fetch('https://alpes.cloud/up/124623d6f46bcaede62ea8f796d66225.json', { mode: 'no-cors'})
-  // .then(blob => blob.json())
-  // .then(data => {
-  //   console.log(data);
-  //   return data;
-  // })
-  // .catch(e => {
-  //   console.log(e);
-  //   return e;
-  // });
   var result = {};
-  var count = 0;
   const length = Object.keys(data).length;
 
   for(let i=0; i<length; i++){
@@ -72,13 +61,8 @@ const fetchData = async () => {
     
     if (maliciousPort.includes(data[i].dstport)) {  
       malicious_count = malicious_count + 1;
-      count = count + 1;
-      // console.log(malicious_count);
     }
   }
-
-  malicious_count = count;
-  // console.log(maliciousPort.includes(data[2].dstport));
 
   var obj =[];
 
@@ -167,12 +151,6 @@ const fetchData = async () => {
 
   printTable(obj);
 
-  // console.log(data);
-
-  // if(malicious_count) {
-  //   setTimeout(()=>alert("You visited a malicious port!! At some point in your browsing"), 2000);
-  // }
-
   checkMalicious();
 };
 
@@ -195,8 +173,6 @@ const printTable = (obj) => {
   });
 };
 
-// fetchData();
-
 function checkMalicious() {
   if(malicious_count) {
     setTimeout(()=>danger.style.display = "block", 2000);
@@ -208,5 +184,3 @@ function checkMalicious() {
 }
 
 document.addEventListener('DOMContentLoaded', fetchData);
-
-// console.log(malicious_count);
